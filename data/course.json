@@ -1,0 +1,44 @@
+{
+  "courses": [
+    {
+      "description": "Curso Java",
+      "src": "https://img-c.udemycdn.com/course/240x135/1701388_0134.jpg",
+      "instructorName": "Leonardo Leitão",
+      "price": 34.90,
+      "ratingClassification": 4.8,
+      "totalRate": 25360
+    },
+    {
+      "description": "Curso Java 2022",
+      "src": "https://img-c.udemycdn.com/course/240x135/870252_cf52_8.jpg",
+      "instructorName": "Leonardo Leitao",
+      "price": 60,
+      "ratingClassification": 4.7,
+      "totalRate": 35300
+    },
+    {
+      "description": "Desenvolvimento Web Completo 2022",
+      "src": "https://img-c.udemycdn.com/course/240x135/1341268_c20e_3.jpg",
+      "instructorName": "Leonardo Leitao",
+      "price": 85.5,
+      "ratingClassification": 4.7,
+      "totalRate": 20000
+    },
+    {
+      "description": "Curso de javascript e Typescript do básico ao avançado 2022",
+      "src": "https://img-c.udemycdn.com/course/240x135/2575266_c184_4.jpg",
+      "instructorName": "Luiz Otávio Miranda",
+      "price": 249.90,
+      "ratingClassification": 4.8,
+      "totalRate": 13905
+    },
+    {
+      "description": "Curso Docker",
+      "src": "https://img-c.udemycdn.com/course/240x135/1137616_870b.jpg",
+      "instructorName": "Leonardo Leitão",
+      "price": 85.5,
+      "ratingClassification": 4.7,
+      "totalRate": 20000
+    }
+  ]
+}
