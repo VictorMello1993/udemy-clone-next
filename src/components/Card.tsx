@@ -9,12 +9,13 @@ export interface CardProps {
   ratingClassification: string;
   totalRate: number;
   price: number;
+  link: string;
 }
 
-export function Card({ src, description, instructorName, ratingClassification, totalRate, price }: CardProps) {
+export function Card({ src, description, instructorName, ratingClassification, totalRate, price, link }: CardProps) {
   return (
     <CardElement>
-      <Link href={src}>
+      <Link href={link}>
         <div className="course-image">
           <img src={src} alt="Imagem de curso" />
         </div>

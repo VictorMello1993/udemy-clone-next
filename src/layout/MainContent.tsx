@@ -38,6 +38,7 @@ export function MainContent(props: MainContentProps) {
                         src={item.src}
                         totalRate={item.totalRate}
                         key={key}
+                        link={item.link}
                       />
                     );
                   })
