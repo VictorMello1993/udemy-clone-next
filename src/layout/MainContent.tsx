@@ -5,15 +5,13 @@ import { Card, CardProps } from "../components/Card";
 import { ContactForm } from "../components/ContactForm";
 
 export type MainContentProps = {
-  data?: any;
   children: React.ReactNode;
   items: any;
 };
 
 export function MainContent(props: MainContentProps) {
-  const { data, items } = props;
-
-  const jsonItems = data ? data.courses : null;
+  const { items } = props;
+  const jsonItems = items || null;
 
   return (
     <MainContentElement>
@@ -38,7 +36,7 @@ export function MainContent(props: MainContentProps) {
                         src={item.src}
                         totalRate={item.totalRate}
                         key={key}
-                        link={item.link}
+                        link="/"
                       />
                     );
                   })

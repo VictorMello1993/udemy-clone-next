@@ -13,9 +13,7 @@ export function Layout(props: LayoutProps) {
   return (
     <div className="layout">
       <Header />
-      <MainContent items={props.items} data={json}>
-        {props.children}
-      </MainContent>
+      <MainContent items={props.items}>{props.children}</MainContent>
       <Footer />
     </div>
   );
