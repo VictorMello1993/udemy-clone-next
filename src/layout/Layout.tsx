@@ -9,11 +9,11 @@ export type LayoutProps = {
   items?: any;
 };
 
-export function Layout(props: LayoutProps) {
+export function Layout({ items, children }: LayoutProps) {
   return (
     <div className="layout">
       <Header />
-      <MainContent items={props.items}>{props.children}</MainContent>
+      <MainContent items={items}>{children}</MainContent>
       <Footer />
     </div>
   );

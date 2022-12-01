@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { BannerMainContent } from "../components/BannerMainContent";
-import { Card, CardProps } from "../components/Card";
+import { Card, CourseItemCardProps } from "../components/Card";
 import { ContactForm } from "../components/ContactForm";
 
 export type MainContentProps = {
@@ -26,17 +26,17 @@ export function MainContent(props: MainContentProps) {
             </div>
             <div className="card-container">
               {jsonItems
-                ? jsonItems.map((item: CardProps, key: number) => {
+                ? jsonItems.map((item: CourseItemCardProps, key: number) => {
                     return (
                       <Card
                         description={item.description}
                         instructorName={item.instructorName}
                         price={item.price}
                         ratingClassification={item.ratingClassification}
-                        src={item.src}
+                        image={item.image}
                         totalRate={item.totalRate}
                         key={key}
-                        link="/"
+                        link={item.link}
                       />
                     );
                   })

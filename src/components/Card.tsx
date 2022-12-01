@@ -2,8 +2,8 @@ import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
-export interface CardProps {
-  src: string;
+export interface CourseItemCardProps {
+  image: string;
   description: string;
   instructorName: string;
   ratingClassification: string;
@@ -12,12 +12,12 @@ export interface CardProps {
   link: string;
 }
 
-export function Card({ src, description, instructorName, ratingClassification, totalRate, price, link }: CardProps) {
+export function Card({ image, description, instructorName, ratingClassification, totalRate, price, link }: CourseItemCardProps) {
   return (
     <CardElement>
       <Link href={link}>
         <div className="course-image">
-          <img src={src} alt="Imagem de curso" />
+          <img src={image} alt="Imagem de curso" />
         </div>
         <div className="course-info">
           <div className="description">
