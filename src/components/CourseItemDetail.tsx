@@ -2,28 +2,26 @@ import React from "react";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import styled from "styled-components";
 
-export interface CourseItemDetailProps {
+export type CourseItemDetailProps = {
   title: string;
-  author: string;
-  publishDate: Date;
-  description: string;
-  ratingClassification: string;
   instructorName: string;
+  publishDate: Date;
+  ratingClassification: string;
   totalRate: Number;
   price: Number;
-  src?: string;
-}
+  image: string;
+};
 
-export function CourseItemDetail({ title, author, publishDate, instructorName, description, ratingClassification, totalRate, price, src }: CourseItemDetailProps) {
+export function CourseItemDetail({ title, publishDate, instructorName, ratingClassification, totalRate, price, image }: CourseItemDetailProps) {
   return (
     <CourseItemDetailTopContainer>
       <div className="course-detail">
-        <div className="course-detail image">{src && <img alt="" src={src} />}</div>
+        <div className="course-detail image">{image && <img alt="" src={image} />}</div>
         <div className="course-detail text">
           <div className="course-detail title">
-            <h2>{description}</h2>
+            <h2>{title}</h2>
           </div>
-          <div className="course-detail description">{description}</div>
+          <div className="course-detail description">{title}</div>
           <div className="course-detail info">
             <div className="rating">{ratingClassification}</div>
             <div className="rating-count">{Number(totalRate)}</div>

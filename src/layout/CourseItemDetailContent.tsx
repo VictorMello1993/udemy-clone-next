@@ -8,21 +8,19 @@ export type CourseItemDetailContentProps = {
 };
 
 export function CourseItemDetailContent({ data }: CourseItemDetailContentProps) {
-  const { author, date, title, instructorName, description, price, ratingClassification, totalRate, image, authorImage, src } = data;
+  const { publishDate, title, instructorName, price, ratingClassification, totalRate, image } = data;
 
   return (
     <MainContentElement>
       <CourseItemDetailTopContainer>
         <CourseItemDetail
-          author={author}
-          publishDate={new Date(date)}
+          publishDate={new Date(publishDate)}
           title={title}
-          description={description}
           price={price}
           ratingClassification={ratingClassification}
           totalRate={totalRate}
           instructorName={instructorName}
-          src={src}
+          image={image}
         />
       </CourseItemDetailTopContainer>
     </MainContentElement>
