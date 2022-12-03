@@ -14,7 +14,7 @@ export function CourseItemDetailContent({ data }: CourseItemDetailContentProps) 
     <MainContentElement>
       <CourseItemDetailTopContainer>
         <CourseItemDetail
-          publishedAt={new Date(publishedAt)}
+          publishedAt={publishedAt}
           description={description}
           price={price}
           ratingClassification={ratingClassification}

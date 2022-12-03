@@ -8,11 +8,11 @@ export function Validate({ name, email, phoneNumber, message }: Payload) {
   const { error } = schema.validate({ name, email, message, phoneNumber }, { abortEarly: false });
 
   if (error) {
-    const messagesSchemaValidation = error.details.map((item) => item);
-
-    messagesSchemaValidation.forEach((item) => {
-      messages.push({ id: uuid(), validationError: item.message, target: item.context?.key as string });
-    });
+    error.details
+      .map((item) => item)
+      .forEach((item) => {
+        messages.push({ id: uuid(), validationError: item.message, target: item.context?.key as string });
+      });
   }
 
   return messages;
