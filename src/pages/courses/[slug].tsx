@@ -63,7 +63,7 @@ export const getStaticProps: GetStaticProps<CourseItemDetailProps, CoursePageQue
 
   return {
     props: {
-      image: `https://webservices.jumpingcrab.com${imageUrl}`,
+      image: `${process.env.URI_STRAPI}${imageUrl}`,
       publishedAt,
       description,
       ratingClassification,

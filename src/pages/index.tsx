@@ -72,7 +72,7 @@ export const getStaticProps: GetStaticProps<HomeProps> = async () => {
         slug,
       },
     }: any) => ({
-      image: `https://webservices.jumpingcrab.com${image}`,
+      image: `${process.env.URI_STRAPI}${image}`,
       description,
       instructorName,
       ratingClassification,

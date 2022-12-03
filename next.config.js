@@ -6,7 +6,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "https://webservices.jumpingcrab.com",
+        hostname: process.env.URI_STRAPI,
         pathname: "/uploads/**",
       },
     ],
