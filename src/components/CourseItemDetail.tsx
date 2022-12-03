@@ -3,25 +3,25 @@ import { MdOutlineShoppingCart } from "react-icons/md";
 import styled from "styled-components";
 
 export type CourseItemDetailProps = {
-  title: string;
+  description: string;
   instructorName: string;
-  publishDate: Date;
+  publishedAt: string;
   ratingClassification: string;
   totalRate: Number;
   price: Number;
   image: string;
 };
 
-export function CourseItemDetail({ title, publishDate, instructorName, ratingClassification, totalRate, price, image }: CourseItemDetailProps) {
+export function CourseItemDetail({ description, publishedAt, instructorName, ratingClassification, totalRate, price, image }: CourseItemDetailProps) {
   return (
     <CourseItemDetailTopContainer>
       <div className="course-detail">
         <div className="course-detail image">{image && <img alt="" src={image} />}</div>
         <div className="course-detail text">
           <div className="course-detail title">
-            <h2>{title}</h2>
+            <h2>{description}</h2>
           </div>
-          <div className="course-detail description">{title}</div>
+          <div className="course-detail description">{description}</div>
           <div className="course-detail info">
             <div className="rating">{ratingClassification}</div>
             <div className="rating-count">{Number(totalRate)}</div>
@@ -30,7 +30,7 @@ export function CourseItemDetail({ title, publishDate, instructorName, ratingCla
           <div className="course-detail created-by">{instructorName}</div>
           <div className="course-detail last-info">
             <div className="course-detail last-update">
-              <time dateTime={publishDate.toJSON()}>{publishDate.toLocaleDateString("pt-br")}</time>
+              <time dateTime={new Date(publishedAt).toJSON()}>{new Date(publishedAt).toLocaleDateString("pt-br")}</time>
             </div>
             <div className="course-detail language">Português</div>
           </div>

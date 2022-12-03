@@ -22,22 +22,22 @@ export const getStaticProps: GetStaticProps<CourseItemDetailProps, CoursePageQue
             eq: "${params?.slug ?? ``}"
           } 
           }) {
-          data {
-            attributes {
-              title
-              price
-              image {
-                data {
-                  attributes {
-                    url
+            data {
+              attributes {
+                description
+                price
+                image {
+                  data {
+                    attributes {
+                      url
                   }
                 }
               }
-              ratingClassification
-              instructorName
-              totalRate
-              publishDate
-              slug
+                ratingClassification
+                instructorName
+                totalRate
+                publishedAt
+                slug
             }
           }
         }
@@ -45,31 +45,27 @@ export const getStaticProps: GetStaticProps<CourseItemDetailProps, CoursePageQue
     `,
   });
 
-  console.log("result", result);
-
   const {
-    data: {
-      attributes: {
-        title,
-        publishDate,
-        ratingClassification,
-        instructorName,
-        price,
-        totalRate,
-        image: {
-          data: {
-            attributes: { url: imageUrl },
-          },
+    attributes: {
+      description,
+      publishedAt,
+      ratingClassification,
+      instructorName,
+      price,
+      totalRate,
+      image: {
+        data: {
+          attributes: { url: imageUrl },
         },
       },
     },
-  } = result.data.courses;
+  } = result.data.courses.data[0];
 
   return {
     props: {
       image: `${process.env.URI_STRAPI}${imageUrl}`,
-      publishDate,
-      title,
+      publishedAt,
+      description,
       ratingClassification,
       instructorName,
       price,
@@ -100,8 +96,6 @@ export const getStaticPaths: GetStaticPaths<CoursePageQuery> = async () => {
   } = result;
 
   const slugs: string[] = coursesSlugs.map(({ attributes: { slug } }: any) => slug);
-
-  console.log("slugs", slugs);
 
   return {
     paths: slugs.map((slug) => ({ params: { slug } })),
