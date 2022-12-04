@@ -58,6 +58,10 @@ const SearchBarElement = styled.div`
     background-color: #f7f9fa;
   }
 
+  .result-item a {
+    margin-left: 20px;
+  }
+
   .search-results {
     background-color: #fff;
     position: absolute;
