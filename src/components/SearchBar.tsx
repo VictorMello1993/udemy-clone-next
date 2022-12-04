@@ -46,17 +46,16 @@ const SearchBarElement = styled.div`
   }
 
   .result-item {
-    padding: 12px;
+    padding: 8px 0 8px 0;
     font-weight: 700;
     text-decoration: none;
-  }
-
-  .result-item:not(:last-child) {
-    border-bottom: solid 1px #f0f0f0;
+    display: flex;
+    align-items: center;
+    color: #000;
   }
 
   .result-item:hover {
-    background-color: #f5eded;
+    background-color: #f7f9fa;
   }
 
   .search-results {
@@ -67,13 +66,7 @@ const SearchBarElement = styled.div`
     left: 0;
     width: 100%;
     z-index: 1001;
-    border: solid 1px #f0f0f0;
-  }
-
-  .search-results,
-  .result-item:last-child {
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
+    border: solid 1px #d1d7dc;
   }
 
   input {
@@ -99,6 +92,9 @@ function SearchResults({ results, onClickResult }: SearchResultsProps) {
     <div className="search-results">
       {results.map((result, index) => (
         <div className="result-item" key={index}>
+          <div className="icon">
+            <MdSearch size="22px" />
+          </div>
           <a
             className="result-item"
             href={result.link}
