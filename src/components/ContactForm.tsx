@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Validate } from "../services/validate";
+import { Validate } from "../functions/validate";
 
 const initialValues = {
   name: "",

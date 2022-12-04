@@ -2,6 +2,7 @@ import React from "react";
 import type { GetServerSideProps, GetStaticPaths, GetStaticProps } from "next";
 import { apolloClient, gql } from "../../../src/apolloClient";
 import { CourseItemDetail, CourseItemDetailProps } from "../../components/CourseItemDetail";
+import { queryCoursesPageBySlug } from "../../queries/queryCoursesPageBySlug";
 
 export type CoursePageProps = CourseItemDetailProps;
 
@@ -15,34 +16,10 @@ export default function CoursePage(props: CourseItemDetailProps) {
 
 export const getStaticProps: GetStaticProps<CourseItemDetailProps, CoursePageQuery> = async ({ params }) => {
   const result = await apolloClient.query({
-    query: gql`
-      query {
-        courses(filters: { 
-          slug: { 
-            eq: "${params?.slug ?? ``}"
-          } 
-          }) {
-            data {
-              attributes {
-                description
-                price
-                image {
-                  data {
-                    attributes {
-                      url
-                  }
-                }
-              }
-                ratingClassification
-                instructorName
-                totalRate
-                publishedAt
-                slug
-            }
-          }
-        }
-      }
-    `,
+    query: queryCoursesPageBySlug,
+    variables: {
+      slug: params?.slug,
+    },
   });
 
   const {
