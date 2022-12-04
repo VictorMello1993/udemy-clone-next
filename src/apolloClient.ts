@@ -1,7 +1,8 @@
-import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
-export { gql } from "@apollo/client";
+import { ApolloClient, InMemoryCache } from "@apollo/client";
+export { gql, ApolloProvider } from "@apollo/client";
 
 export const apolloClient = new ApolloClient({
+  ssrMode: true,
   uri: "https://webservices.jumpingcrab.com/graphql",
   cache: new InMemoryCache(),
 });
