@@ -1,5 +1,5 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
-export { gql, ApolloProvider } from "@apollo/client";
+export { gql, ApolloProvider, useQuery, useLazyQuery } from "@apollo/client";
 
 const serverUrl = "https://webservices.jumpingcrab.com";
 

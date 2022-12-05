@@ -1,9 +1,44 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import { useRouter } from "next/router";
 import { MdSearch } from "react-icons/md";
 import styled from "styled-components";
+import { useLazyQuery } from "../apolloClient";
+import { mapCoursesToCourseItemCard } from "../functions/mapCoursesToCourseItemCard";
+import { querySearchCourses } from "../queries/querySearchCourses";
+import { debounce } from "lodash";
+
+type SearchResult = {
+  description: string;
+  link: string;
+};
+
+type SearchResultsProps = {
+  results: SearchResult[];
+  onClickResult: (searchResult: SearchResult) => void;
+};
 
 export function SearchBar() {
+  const router = useRouter();
   const [searchInput, setSearchInput] = useState("");
+  const [searchCourses, { data, loading }] = useLazyQuery(querySearchCourses);
+  const debouncedSearchCourses = useCallback(debounce(searchCourses, 1000), []);
+
+  const courses: SearchResult[] = data
+    ? data.courses.data.map(({ attributes: { description, slug } }: any) => ({
+        description,
+        link: `/courses/${slug}`,
+      }))
+    : [];
+
+  useEffect(() => {
+    if (searchInput.length > 0) {
+      debouncedSearchCourses({
+        variables: {
+          searchInput,
+        },
+      });
+    }
+  }, [searchInput]);
 
   return (
     <SearchBarElement>
@@ -14,16 +49,17 @@ export function SearchBar() {
         <input placeholder="Pesquise por qualquer coisa" value={searchInput} onChange={(event) => setSearchInput(event.target.value)} />
       </div>
 
-      <div className="search-bar-results">
-        <SearchResults
-          results={[
-            { title: "teste1", link: "/teste" },
-            { title: "teste2", link: "/teste" },
-            { title: "teste3", link: "/teste" },
-          ]}
-          onClickResult={(result) => console.log(result)}
-        />
-      </div>
+      {!loading && searchInput.length > 0 && courses.length > 0 && (
+        <div className="search-bar-results">
+          <SearchResults
+            results={courses}
+            onClickResult={(result) => {
+              router.push(result.link);
+              setSearchInput("");
+            }}
+          />
+        </div>
+      )}
     </SearchBarElement>
   );
 }
@@ -81,16 +117,6 @@ const SearchBarElement = styled.div`
   }
 `;
 
-type SearchResult = {
-  title: string;
-  link: string;
-};
-
-type SearchResultsProps = {
-  results: SearchResult[];
-  onClickResult: (searchResult: SearchResult) => void;
-};
-
 function SearchResults({ results, onClickResult }: SearchResultsProps) {
   return (
     <div className="search-results">
@@ -107,7 +133,7 @@ function SearchResults({ results, onClickResult }: SearchResultsProps) {
               onClickResult(result);
             }}
           >
-            {result.title}
+            {result.description}
           </a>
         </div>
       ))}
