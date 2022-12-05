@@ -4,6 +4,7 @@ import { apolloClient } from "../../../src/apolloClient";
 import { CourseItemDetail, CourseItemDetailProps } from "../../components/CourseItemDetail";
 import { queryCoursesPageBySlug } from "../../queries/queryCoursesPageBySlug";
 import { queryCoursesSlugs } from "../../queries/queryCoursesSlugs";
+import { decodeCourse } from "../../decoders/decodeCourse";
 
 export type CoursePageProps = CourseItemDetailProps;
 
@@ -23,31 +24,11 @@ export const getStaticProps: GetStaticProps<CourseItemDetailProps, CoursePageQue
     },
   });
 
-  const {
-    attributes: {
-      description,
-      publishedAt,
-      ratingClassification,
-      instructorName,
-      price,
-      totalRate,
-      image: {
-        data: {
-          attributes: { url: imageUrl },
-        },
-      },
-    },
-  } = result.data.courses.data[0];
+  const course = decodeCourse(result.data.courses.data[0]);
 
   return {
     props: {
-      image: `https://webservices.jumpingcrab.com${imageUrl}`,
-      publishedAt,
-      description,
-      ratingClassification,
-      instructorName,
-      price,
-      totalRate,
+      ...course,
     },
   };
 };
