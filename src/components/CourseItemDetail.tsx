@@ -83,6 +83,10 @@ const CourseItemDetailTopContainer = styled.div`
     font-weight: 500;
   }
 
+  .course-detail .image img {
+    width: 480px;
+  }
+
   .purchase-button {
     background-color: #a435f0;
     padding: 12px 12px;

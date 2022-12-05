@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import { MdSearch } from "react-icons/md";
 import styled from "styled-components";
 import { useLazyQuery } from "../apolloClient";
-import { mapCoursesToCourseItemCard } from "../functions/mapCoursesToCourseItemCard";
 import { querySearchCourses } from "../queries/querySearchCourses";
 import { debounce } from "lodash";
 
