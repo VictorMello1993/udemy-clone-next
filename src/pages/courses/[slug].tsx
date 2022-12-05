@@ -1,8 +1,9 @@
 import React from "react";
-import type { GetServerSideProps, GetStaticPaths, GetStaticProps } from "next";
-import { apolloClient, gql } from "../../../src/apolloClient";
+import type { GetStaticPaths, GetStaticProps } from "next";
+import { apolloClient } from "../../../src/apolloClient";
 import { CourseItemDetail, CourseItemDetailProps } from "../../components/CourseItemDetail";
 import { queryCoursesPageBySlug } from "../../queries/queryCoursesPageBySlug";
+import { queryCoursesSlugs } from "../../queries/queryCoursesSlugs";
 
 export type CoursePageProps = CourseItemDetailProps;
 
@@ -53,17 +54,7 @@ export const getStaticProps: GetStaticProps<CourseItemDetailProps, CoursePageQue
 
 export const getStaticPaths: GetStaticPaths<CoursePageQuery> = async () => {
   const result = await apolloClient.query({
-    query: gql`
-      query {
-        courses {
-          data {
-            attributes {
-              slug
-            }
-          }
-        }
-      }
-    `,
+    query: queryCoursesSlugs,
   });
 
   const {
