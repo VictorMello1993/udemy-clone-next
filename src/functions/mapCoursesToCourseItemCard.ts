@@ -1,8 +1,8 @@
 import { getImageUrl } from "../apolloClient";
 import { CourseItemCardProps } from "../components/Card";
 
-export function mapCoursesToCourseItemCard(courses: any): CourseItemCardProps {
-  return courses.data.map(
+export function mapCoursesToCourseItemCard(data: any): CourseItemCardProps {
+  return data.courses.data.map(
     ({
       attributes: {
         image: {

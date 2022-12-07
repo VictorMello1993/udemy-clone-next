@@ -16,11 +16,11 @@ export default function Home({ courses, children }: HomeProps) {
 }
 
 export const getStaticProps: GetStaticProps<HomeProps> = async () => {
-  const result = await apolloClient.query({
+  const { data } = await apolloClient.query({
     query: queryCoursesPage,
   });
 
-  const courses = mapCoursesToCourseItemCard(result.data.courses);
+  const courses = mapCoursesToCourseItemCard(data);
 
   return {
     props: {

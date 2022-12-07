@@ -5,6 +5,7 @@ import { CourseItemDetail, CourseItemDetailProps } from "../../components/Course
 import { queryCoursesPageBySlug } from "../../queries/queryCoursesPageBySlug";
 import { queryCoursesSlugs } from "../../queries/queryCoursesSlugs";
 import { decodeCourse } from "../../decoders/decodeCourse";
+import { decodeCourses } from "../../decoders/decodeCourses";
 
 export type CoursePageProps = CourseItemDetailProps;
 
@@ -34,20 +35,19 @@ export const getStaticProps: GetStaticProps<CourseItemDetailProps, CoursePageQue
 };
 
 export const getStaticPaths: GetStaticPaths<CoursePageQuery> = async () => {
-  const result = await apolloClient.query({
+  const { data } = await apolloClient.query({
     query: queryCoursesSlugs,
   });
 
-  const {
-    data: {
-      courses: { data: coursesSlugs },
-    },
-  } = result;
+  const { courses } = decodeCourses(data);
 
-  const slugs: string[] = coursesSlugs.map(({ attributes: { slug } }: any) => slug);
+  const slugs = courses.map((course) => course.slug);
+  const paths = slugs.map((slug) => ({ params: { slug } }));
+
+  console.log("paths", paths);
 
   return {
-    paths: slugs.map((slug) => ({ params: { slug } })),
+    paths,
     fallback: false,
   };
 };
