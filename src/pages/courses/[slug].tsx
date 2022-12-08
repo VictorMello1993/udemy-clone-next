@@ -18,14 +18,18 @@ export default function CoursePage(props: CourseItemDetailProps) {
 }
 
 export const getStaticProps: GetStaticProps<CourseItemDetailProps, CoursePageQuery> = async ({ params }) => {
-  const result = await apolloClient.query({
+  const {
+    data: {
+      courses: { data },
+    },
+  } = await apolloClient.query({
     query: queryCoursesPageBySlug,
     variables: {
       slug: params?.slug,
     },
   });
 
-  const course = decodeCourse(result.data.courses.data[0]);
+  const course = decodeCourse(data[0]);
 
   return {
     props: {
@@ -43,8 +47,6 @@ export const getStaticPaths: GetStaticPaths<CoursePageQuery> = async () => {
 
   const slugs = courses.map((course) => course.slug);
   const paths = slugs.map((slug) => ({ params: { slug } }));
-
-  console.log("paths", paths);
 
   return {
     paths,

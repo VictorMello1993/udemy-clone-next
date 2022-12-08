@@ -5,8 +5,8 @@ export type CourseData = {
   publishedAt: string;
   ratingClassification: string;
   instructorName: string;
-  price: Number;
-  totalRate: Number;
+  price: number;
+  totalRate: number;
   image: string;
   slug: string;
 };
