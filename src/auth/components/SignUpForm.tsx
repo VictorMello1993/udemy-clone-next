@@ -16,9 +16,9 @@ export function SignUpForm() {
         <button type="submit" className="signup-button">
           Cadastre-se
         </button>
-        <label htmlFor="subscribe-to-email" className="signup-field label-subscribe-to-email" onChange={() => setIsChecked(!isChecked)}>
+        <label htmlFor="subscribe-to-email" className="signup-field label-subscribe-to-email">
+          <input type="checkbox" className="signup-field-checkbox" id="subscribe-to-email" name="subscribeToEmail" onChange={() => setIsChecked(!isChecked)} />
           <CheckedImage width={20} height={20} checked={isChecked} />
-          <input type="checkbox" className="signup-field checkbox" id="subscribe-to-email" name="subscribeToEmail" />
           <span className="subscribe-text">Quero receber ofertas especiais, recomendações personalizadas e dicas de aprendizado.</span>
         </label>
         <div className="separator"></div>
@@ -87,11 +87,9 @@ const SignUpFormContainer = styled.div`
     padding: 8px 0;
     cursor: pointer;
     user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
   }
 
-  .checkbox {
+  .signup-field-checkbox {
     margin: 0;
     appearance: none;
     -webkit-appearance: none;
@@ -117,17 +115,12 @@ const SignUpFormContainer = styled.div`
   }
 
   .footer-form {
-    margin-top: px;
+    margin-top: 8px;
     display: flex;
     justify-content: center;
   }
 
   .footer-form-text {
     font-size: 14px;
-  }
-
-  .footer-link {
-    font-weight: 700;
-    text-underline-offset: 4px;
   }
 `;
