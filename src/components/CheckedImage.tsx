@@ -3,11 +3,10 @@ import React from "react";
 export type CheckedImageProps = {
   width?: string | number;
   height?: string | number;
-  fill?: string;
   checked: boolean;
 };
 
-export function CheckedImage({ width, height, fill, checked }: CheckedImageProps) {
+export function CheckedImage({ width, height, checked }: CheckedImageProps) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} fill="#000000" viewBox="0 0 256 256">
       <rect width="256" height="256" fill="none"></rect>

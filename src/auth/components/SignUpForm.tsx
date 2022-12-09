@@ -4,7 +4,7 @@ import { useState } from "react";
 import { CheckedImage } from "../../components/CheckedImage";
 
 export function SignUpForm() {
-  const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(true);
 
   return (
     <SignUpFormContainer>
@@ -49,6 +49,7 @@ const SignUpFormContainer = styled.div`
   .signup-field,
   .signup-button {
     width: 100%;
+    outline: none;
   }
 
   .signup-field {
@@ -63,7 +64,12 @@ const SignUpFormContainer = styled.div`
 
   .signup-field::placeholder {
     font-weight: 700;
+    font-family: udemy sans, -apple-system, BlinkMacSystemFont, Roboto, segoe ui, Helvetica, Arial, sans-serif, apple color emoji, segoe ui emoji, segoe ui symbol;
     color: #1c1d1f;
+  }
+
+  .signup-field:focus {
+    transition: opacity 100ms linear;
   }
 
   .signup-button {
@@ -122,5 +128,15 @@ const SignUpFormContainer = styled.div`
 
   .footer-form-text {
     font-size: 14px;
+  }
+
+  .footer-link {
+    color: #5624d0;
+    text-underline-offset: 4px;
+    font-weight: 700;
+  }
+
+  .footer-link:hover {
+    color: #401b9c;
   }
 `;
