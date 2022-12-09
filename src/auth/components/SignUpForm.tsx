@@ -16,7 +16,7 @@ export function SignUpForm() {
         <button type="submit" className="signup-button">
           Cadastre-se
         </button>
-        <label htmlFor="subscribe-to-email" className="signup-field label-subscribe-to-email" onChange={(event) => setIsChecked(!isChecked)}>
+        <label htmlFor="subscribe-to-email" className="signup-field label-subscribe-to-email" onChange={() => setIsChecked(!isChecked)}>
           <CheckedImage width={20} height={20} checked={isChecked} />
           <input type="checkbox" className="signup-field checkbox" id="subscribe-to-email" name="subscribeToEmail" />
           <span className="subscribe-text">Quero receber ofertas especiais, recomendações personalizadas e dicas de aprendizado.</span>
@@ -125,5 +125,10 @@ const SignUpFormContainer = styled.div`
 
   .footer-form-text {
     font-size: 14px;
+  }
+
+  .footer-link {
+    font-weight: 700;
+    text-underline-offset: 4px;
   }
 `;
