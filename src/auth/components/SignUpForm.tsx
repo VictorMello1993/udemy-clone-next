@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { IoCheckboxSharp } from "react-icons/io5";
 import { useState } from "react";
+import { CheckedImage } from "../../components/CheckedImage";
 
 export function SignUpForm() {
   const [isChecked, setIsChecked] = useState(false);
@@ -16,7 +17,8 @@ export function SignUpForm() {
           Cadastre-se
         </button>
         <label htmlFor="subscribe-to-email" className="signup-field label-subscribe-to-email" onChange={(event) => setIsChecked(!isChecked)}>
-          <input type="checkbox" className={`signup-field ${isChecked ? "checked" : "unchecked"}`} id="subscribe-to-email" name="subscribeToEmail" />
+          <CheckedImage width={20} height={20} checked={isChecked} />
+          <input type="checkbox" className="signup-field checkbox" id="subscribe-to-email" name="subscribeToEmail" />
           <span className="subscribe-text">Quero receber ofertas especiais, recomendações personalizadas e dicas de aprendizado.</span>
         </label>
         <div className="separator"></div>
@@ -89,29 +91,21 @@ const SignUpFormContainer = styled.div`
     -ms-user-select: none;
   }
 
-  .unchecked {
+  .checkbox {
     margin: 0;
     appearance: none;
     -webkit-appearance: none;
-    height: 40px;
-    width: 40px;
+    height: 20px;
+    width: 20px;
     box-sizing: border-box;
     border: 1px solid #000;
-  }
-
-  .checked {
-    background-color: red;
-    margin: 0;
-    appearance: none;
-    -webkit-appearance: none;
-    height: 40px;
-    width: 40px;
-    box-sizing: border-box;
+    visibility: hidden;
+    display: none;
   }
 
   .subscribe-text {
     display: inline-block;
-    margin-left: 10px;
+    margin-left: 5px;
     font-size: 14px;
     line-height: 1.4;
     font-weight: 400;
