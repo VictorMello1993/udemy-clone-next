@@ -99,7 +99,6 @@ const SignUpFormContainer = styled.div`
     width: 20px;
     box-sizing: border-box;
     border: 1px solid #000;
-    visibility: hidden;
     display: none;
   }
 
