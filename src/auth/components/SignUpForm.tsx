@@ -5,12 +5,6 @@ import { useState } from "react";
 export function SignUpForm() {
   const [isChecked, setIsChecked] = useState(false);
 
-  function handleOnChange() {
-    console.log("executando...");
-    setIsChecked(!isChecked);
-    console.log(isChecked);
-  }
-
   return (
     <SignUpFormContainer>
       <form noValidate>
@@ -21,9 +15,8 @@ export function SignUpForm() {
         <button type="submit" className="signup-button">
           Cadastre-se
         </button>
-        <label htmlFor="subscribe-to-email" className="signup-field label-subscribe-to-email">
-          <input type="checkbox" className="signup-field-check" id="subscribe-to-email" name="subscribeToEmail" onChange={handleOnChange} checked={isChecked} />
-          {isChecked ? <IoCheckboxSharp className="checked-icon" size={40} /> : null}
+        <label htmlFor="subscribe-to-email" className="signup-field label-subscribe-to-email" onChange={(event) => setIsChecked(!isChecked)}>
+          <input type="checkbox" className={`signup-field ${isChecked ? "checked" : "unchecked"}`} id="subscribe-to-email" name="subscribeToEmail" />
           <span className="subscribe-text">Quero receber ofertas especiais, recomendações personalizadas e dicas de aprendizado.</span>
         </label>
         <div className="separator"></div>
@@ -91,9 +84,12 @@ const SignUpFormContainer = styled.div`
     border: none;
     padding: 8px 0;
     cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
   }
 
-  .signup-field-check {
+  .unchecked {
     margin: 0;
     appearance: none;
     -webkit-appearance: none;
@@ -101,6 +97,16 @@ const SignUpFormContainer = styled.div`
     width: 40px;
     box-sizing: border-box;
     border: 1px solid #000;
+  }
+
+  .checked {
+    background-color: red;
+    margin: 0;
+    appearance: none;
+    -webkit-appearance: none;
+    height: 40px;
+    width: 40px;
+    box-sizing: border-box;
   }
 
   .subscribe-text {
