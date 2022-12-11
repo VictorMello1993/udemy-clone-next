@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { CheckedImage } from "../../components/CheckedImage";
@@ -19,6 +20,8 @@ function LoadingIdicator() {
 }
 
 export function SignUpForm() {
+  const router = useRouter();
+
   const [isChecked, setIsChecked] = useState(true);
 
   const [{ data, loading }, execute] = useAxios<{ user: { id: number }; errors: ZodIssue[] }, UserSchema>(
@@ -51,6 +54,7 @@ export function SignUpForm() {
             background: "#afdfaf",
           },
         });
+        router.push("/");
       } else {
         toast(texts.submitFailure, {
           style: {
