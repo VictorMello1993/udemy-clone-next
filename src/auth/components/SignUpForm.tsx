@@ -1,14 +1,26 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CheckedImage } from "../../components/CheckedImage";
 import { useZorm } from "react-zorm";
-import { userSchema, UserSchema } from "../schemas/userSchema";
+import { userSchema, UserSchema } from "../../user/schemas/userSchema";
 import useAxios from "axios-hooks";
+import { ZodIssue } from "zod";
+import { MdHourglassBottom, MdHourglassTop } from "react-icons/md";
+
+function LoadingIdicator() {
+  const [top, setTop] = useState(true);
+  useEffect(() => {
+    const timeoutId = setTimeout(() => setTop(!top), 500);
+    return () => clearTimeout(timeoutId);
+  }, [top]);
+
+  return top ? <MdHourglassTop size="16px" color="#a435f0" /> : <MdHourglassBottom size="16px" color="#a435f0" />;
+}
 
 export function SignUpForm() {
   const [isChecked, setIsChecked] = useState(true);
 
-  const [{}, execute] = useAxios<UserSchema, UserSchema>(
+  const [{ data, loading }, execute] = useAxios<{ user: { id: number }; errors: ZodIssue[] }, UserSchema>(
     {
       url: "/api/signup",
       method: "POST",
@@ -19,15 +31,16 @@ export function SignUpForm() {
   );
 
   const { ref, fields, errors, validation } = useZorm("signup", userSchema, {
-    onValidSubmit(event) {
+    customIssues: data?.errors,
+    async onValidSubmit(event) {
       event.preventDefault();
-      execute({
+      const { data } = await execute({
         data: event.data,
       });
     },
   });
 
-  const disabled = validation?.success === false;
+  const disabled = validation?.success === false || loading;
 
   const texts = {
     title: "Inscreva-se e comece a aprender",
@@ -36,7 +49,6 @@ export function SignUpForm() {
   };
 
   function ErrorMessage({ message }: { message: string }) {
-    console.log(message);
     if (!message) {
       return null;
     }
@@ -79,6 +91,10 @@ export function SignUpForm() {
 
     .signup-field:focus {
       border-color: #5624d0;
+    }
+
+    .signup-field:disabled {
+      border-color: #ccc;
     }
 
     .signup-button {
@@ -170,23 +186,23 @@ export function SignUpForm() {
     <SignUpFormContainer>
       <form noValidate ref={ref}>
         <h1 className="signup-title">{texts.title}</h1>
-        <input type="text" placeholder="Nome completo" className={`signup-field ${errors.fullname("error")}`} name={fields.fullname()} />
+        <input type="text" placeholder="Nome completo" className={`signup-field ${errors.fullname("error")}`} name={fields.fullname()} disabled={loading} />
         {errors.fullname((error) => (
           <ErrorMessage message={error.message} />
         ))}
-        <input type="email" placeholder="E-mail" className={`signup-field ${errors.email("error")}`} name={fields.email()} />
+        <input type="email" placeholder="E-mail" className={`signup-field ${errors.email("error")}`} name={fields.email()} disabled={loading} />
         {errors.email((error) => (
           <ErrorMessage message={error.message} />
         ))}
-        <input type="password" placeholder="Senha" className={`signup-field ${errors.password("error")}`} name={fields.password()} />
+        <input type="password" placeholder="Senha" className={`signup-field ${errors.password("error")}`} name={fields.password()} disabled={loading} />
         {errors.password((error) => (
           <ErrorMessage message={error.message} />
         ))}
         <button type="submit" className="signup-button" disabled={disabled}>
-          {texts.submit}
+          {loading ? <LoadingIdicator /> : texts.submit}
         </button>
         <label htmlFor="subscribe-to-email" className="signup-field label-subscribe-to-email">
-          <input type="checkbox" className="signup-field-checkbox" id="subscribe-to-email" name="subscribeToEmail" onChange={() => setIsChecked(!isChecked)} />
+          <input type="checkbox" className="signup-field-checkbox" id="subscribe-to-email" name={fields.subscribeToEmail()} onChange={() => setIsChecked(!isChecked)} />
           <CheckedImage width={20} height={20} checked={isChecked} />
           <span className="subscribe-text">Quero receber ofertas especiais, recomendações personalizadas e dicas de aprendizado.</span>
         </label>

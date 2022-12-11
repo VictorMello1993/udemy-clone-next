@@ -1,26 +1,13 @@
 import styled from "styled-components";
-import { userSchema, UserSchema } from "../schemas/userSchema";
+import { userSchema, UserSchema } from "../../user/schemas/userSchema";
 import useAxios from "axios-hooks";
 import { useZorm } from "react-zorm";
 
 export function SignInForm() {
-  const [{}, execute] = useAxios<UserSchema, UserSchema>(
-    {
-      url: "/api/signin",
-      method: "POST",
-    },
-    {
-      manual: true,
-    },
-  );
-
   const { ref, fields, errors, validation } = useZorm("signin", userSchema, {
     onValidSubmit(event) {
       event.preventDefault();
       console.log(event.data);
-      // execute({
-      //   data: event.data,
-      // });
     },
   });
 

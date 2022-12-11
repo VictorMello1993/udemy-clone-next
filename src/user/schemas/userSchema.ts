@@ -21,10 +21,13 @@ const password = z
   .min(passwordMinLength, { message: messages.min("Senha", passwordMinLength) })
   .max(passwordMaxLength, { message: messages.max("Senha", passwordMaxLength) });
 
+const subscribeToEmail = z.boolean().optional();
+
 export const userSchema = z.object({
   fullname,
   email,
   password,
+  subscribeToEmail,
 });
 
 export type UserSchema = z.infer<typeof userSchema>;
