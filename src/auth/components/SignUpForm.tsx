@@ -234,7 +234,7 @@ export function SignUpForm() {
           {loading ? <LoadingIdicator /> : texts.submit}
         </button>
         <label htmlFor="subscribe-to-email" className="signup-field label-subscribe-to-email">
-          <input type="checkbox" className="signup-field-checkbox" id="subscribe-to-email" name={fields.subscribeToEmail()} onChange={() => setIsChecked(!isChecked)} />
+          <input type="checkbox" className="signup-field-checkbox" id="subscribe-to-email" onChange={() => setIsChecked(!isChecked)} />
           <CheckedImage width={20} height={20} checked={isChecked} />
           <span className="subscribe-text">Quero receber ofertas especiais, recomendações personalizadas e dicas de aprendizado.</span>
         </label>
