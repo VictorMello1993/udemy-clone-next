@@ -1,20 +1,58 @@
 import styled from "styled-components";
-import { IoCheckboxSharp } from "react-icons/io5";
 import { useState } from "react";
 import { CheckedImage } from "../../components/CheckedImage";
+import { useZorm } from "react-zorm";
+import { userSchema, UserSchema } from "../schemas/userSchema";
+import useAxios from "axios-hooks";
 
 export function SignUpForm() {
   const [isChecked, setIsChecked] = useState(true);
 
+  const [{}, execute] = useAxios<UserSchema, UserSchema>(
+    {
+      url: "/api/signup",
+      method: "POST",
+    },
+    {
+      manual: true,
+    },
+  );
+
+  const { ref, fields, errors, validation } = useZorm("signup", userSchema, {
+    onValidSubmit(event) {
+      event.preventDefault();
+      execute({
+        data: event.data,
+      });
+    },
+  });
+
+  const disabled = validation?.success === false;
+
+  const texts = {
+    title: "Inscreva-se e comece a aprender",
+    submit: "Cadastre-se",
+    alreadyHasAccount: "Já tem uma conta? Faça login",
+  };
+
   return (
     <SignUpFormContainer>
-      <form noValidate>
-        <h1 className="signup-title">Inscreva-se e comece a aprender</h1>
-        <input type="text" placeholder="Nome completo" className="signup-field" />
-        <input type="email" placeholder="E-mail" className="signup-field" />
-        <input type="password" placeholder="Senha" className="signup-field" />
-        <button type="submit" className="signup-button">
-          Cadastre-se
+      <form noValidate ref={ref}>
+        <h1 className="signup-title">{texts.title}</h1>
+        <input type="text" placeholder="Nome completo" className={`signup-field ${errors.fullname("error")}`} name={fields.fullname()} />
+        {errors.fullname((error) => (
+          <ErrorMessage message={error.message} />
+        ))}
+        <input type="email" placeholder="E-mail" className={`signup-field ${errors.email("error")}`} name={fields.email()} />
+        {errors.email((error) => (
+          <ErrorMessage message={error.message} />
+        ))}
+        <input type="password" placeholder="Senha" className={`signup-field ${errors.password("error")}`} name={fields.password()} />
+        {errors.password((error) => (
+          <ErrorMessage message={error.message} />
+        ))}
+        <button type="submit" className="signup-button" disabled={disabled}>
+          {texts.submit}
         </button>
         <label htmlFor="subscribe-to-email" className="signup-field label-subscribe-to-email">
           <input type="checkbox" className="signup-field-checkbox" id="subscribe-to-email" name="subscribeToEmail" onChange={() => setIsChecked(!isChecked)} />
@@ -24,15 +62,24 @@ export function SignUpForm() {
         <div className="separator"></div>
         <div className="footer-form">
           <span className="footer-form-text">
-            Já tem uma conta?{" "}
-            <a href="/" className="footer-link">
-              Faça login
+            {`${texts.alreadyHasAccount.split("?")[0]}?`}
+            <a href="/" className="footer-form-link">
+              {texts.alreadyHasAccount.split("?")[1]}
             </a>
           </span>
         </div>
       </form>
     </SignUpFormContainer>
   );
+}
+
+function ErrorMessage({ message }: { message: string }) {
+  console.log(message);
+  if (!message) {
+    return null;
+  }
+
+  return <span className="error-message">{message}</span>;
 }
 
 const SignUpFormContainer = styled.div`
@@ -69,7 +116,7 @@ const SignUpFormContainer = styled.div`
   }
 
   .signup-field:focus {
-    transition: opacity 100ms linear;
+    border-color: #5624d0;
   }
 
   .signup-button {
@@ -79,6 +126,11 @@ const SignUpFormContainer = styled.div`
     color: #fff;
     font-weight: 800;
     height: 48px;
+  }
+
+  .signup-button:disabled {
+    border-color: #ccc;
+    background-color: #ccc;
   }
 
   .signup-button:hover {
@@ -130,13 +182,24 @@ const SignUpFormContainer = styled.div`
     font-size: 14px;
   }
 
-  .footer-link {
+  .footer-form-link {
     color: #5624d0;
     text-underline-offset: 4px;
     font-weight: 700;
   }
 
-  .footer-link:hover {
+  .footer-form-link:hover {
     color: #401b9c;
+  }
+
+  .error {
+    border-color: #f11212;
+  }
+
+  .error-message {
+    color: #f11212;
+    font-size: 10px;
+    display: block;
+    margin-bottom: 16px;
   }
 `;
