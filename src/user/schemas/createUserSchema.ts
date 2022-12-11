@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import { userSchema } from "./userSchema";
 import * as userRepository from "../../userRepository";
 
@@ -6,9 +7,10 @@ const messages = {
 };
 
 export const createUserSchema = userSchema
-  .transform((user) => ({
+  .transform(async (user) => ({
     ...user,
     fullname: user.fullname.trim(),
+    password: await bcrypt.hash(user.password, await bcrypt.genSalt(10)),
   }))
   .refine(
     async ({ email }) => {

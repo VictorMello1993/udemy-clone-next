@@ -6,6 +6,7 @@ import { userSchema, UserSchema } from "../../user/schemas/userSchema";
 import useAxios from "axios-hooks";
 import { ZodIssue } from "zod";
 import { MdHourglassBottom, MdHourglassTop } from "react-icons/md";
+import { toast } from "react-toastify";
 
 function LoadingIdicator() {
   const [top, setTop] = useState(true);
@@ -32,11 +33,36 @@ export function SignUpForm() {
 
   const { ref, fields, errors, validation } = useZorm("signup", userSchema, {
     customIssues: data?.errors,
+
     async onValidSubmit(event) {
       event.preventDefault();
       const { data } = await execute({
         data: event.data,
       });
+
+      if (data.user) {
+        toast(texts.submitSuccess, {
+          style: {
+            backgroundColor: "#3c9e3c",
+            color: "#fff",
+          },
+          autoClose: 5000,
+          progressStyle: {
+            background: "#afdfaf",
+          },
+        });
+      } else {
+        toast(texts.submitFailure, {
+          style: {
+            backgroundColor: "#f11212",
+            color: "#fff",
+          },
+          autoClose: 5000,
+          progressStyle: {
+            background: "#e2a8b2",
+          },
+        });
+      }
     },
   });
 
@@ -46,6 +72,8 @@ export function SignUpForm() {
     title: "Inscreva-se e comece a aprender",
     submit: "Cadastre-se",
     alreadyHasAccount: "Já tem uma conta? Faça login",
+    submitSuccess: "Conta criada com sucesso",
+    submitFailure: "Houve um erro ao criar sua conta",
   };
 
   function ErrorMessage({ message }: { message: string }) {
