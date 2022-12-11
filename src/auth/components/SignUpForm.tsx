@@ -35,6 +35,137 @@ export function SignUpForm() {
     alreadyHasAccount: "Já tem uma conta? Faça login",
   };
 
+  function ErrorMessage({ message }: { message: string }) {
+    console.log(message);
+    if (!message) {
+      return null;
+    }
+
+    return <span className="error-message">{message}</span>;
+  }
+
+  const SignUpFormContainer = styled.div`
+    width: 400px;
+    margin: 48px auto;
+    padding: 48px 24px;
+
+    .signup-title {
+      margin-bottom: 16px;
+      font-size: 16px;
+      font-family: udemy sans, -apple-system, BlinkMacSystemFont, Roboto, segoe ui, Helvetica, Arial, sans-serif, apple color emoji, segoe ui emoji, segoe ui symbol;
+    }
+
+    .signup-field,
+    .signup-button {
+      width: 100%;
+      outline: none;
+    }
+
+    .signup-field {
+      margin-bottom: 8px;
+      padding: 20px 16px;
+      outline: none;
+      border: 1px solid #1c1d1f;
+      display: block;
+      box-sizing: border-box;
+      background-color: #f0f0f0;
+    }
+
+    .signup-field::placeholder {
+      font-weight: 700;
+      font-family: udemy sans, -apple-system, BlinkMacSystemFont, Roboto, segoe ui, Helvetica, Arial, sans-serif, apple color emoji, segoe ui emoji, segoe ui symbol;
+      color: #1c1d1f;
+    }
+
+    .signup-field:focus {
+      border-color: #5624d0;
+    }
+
+    .signup-button {
+      border: none;
+      padding: 12px 0;
+      background-color: #a435f0;
+      color: #fff;
+      font-weight: 800;
+      height: 48px;
+    }
+
+    .signup-button:disabled {
+      border-color: #ccc;
+      background-color: #ccc;
+    }
+
+    .signup-button:hover {
+      cursor: pointer;
+      background-color: #8710d8;
+    }
+
+    .label-subscribe-to-email {
+      display: flex;
+      margin-top: 20px;
+      border: none;
+      padding: 8px 0;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .signup-field-checkbox {
+      margin: 0;
+      appearance: none;
+      -webkit-appearance: none;
+      height: 20px;
+      width: 20px;
+      box-sizing: border-box;
+      border: 1px solid #000;
+      display: none;
+    }
+
+    .subscribe-text {
+      display: inline-block;
+      margin-left: 5px;
+      font-size: 14px;
+      line-height: 1.4;
+      font-weight: 400;
+      flex: 1;
+    }
+
+    .separator {
+      border-top: 1px solid #aeb1b5;
+      margin: 16px 0;
+    }
+
+    .footer-form {
+      margin-top: 8px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .footer-form-text {
+      font-size: 14px;
+    }
+
+    .footer-form-link {
+      color: #5624d0;
+      text-underline-offset: 4px;
+      font-weight: 700;
+    }
+
+    .footer-form-link:hover {
+      color: #401b9c;
+    }
+
+    .error {
+      border-color: #f11212;
+    }
+
+    .error-message {
+      color: #f11212;
+      font-size: 10px;
+      display: block;
+      margin-bottom: 16px;
+    }
+  `;
+
   return (
     <SignUpFormContainer>
       <form noValidate ref={ref}>
@@ -72,134 +203,3 @@ export function SignUpForm() {
     </SignUpFormContainer>
   );
 }
-
-function ErrorMessage({ message }: { message: string }) {
-  console.log(message);
-  if (!message) {
-    return null;
-  }
-
-  return <span className="error-message">{message}</span>;
-}
-
-const SignUpFormContainer = styled.div`
-  width: 400px;
-  margin: 48px auto;
-  padding: 48px 24px;
-
-  .signup-title {
-    margin-bottom: 16px;
-    font-size: 16px;
-    font-family: udemy sans, -apple-system, BlinkMacSystemFont, Roboto, segoe ui, Helvetica, Arial, sans-serif, apple color emoji, segoe ui emoji, segoe ui symbol;
-  }
-
-  .signup-field,
-  .signup-button {
-    width: 100%;
-    outline: none;
-  }
-
-  .signup-field {
-    margin-bottom: 8px;
-    padding: 20px 16px;
-    outline: none;
-    border: 1px solid #1c1d1f;
-    display: block;
-    box-sizing: border-box;
-    background-color: #f0f0f0;
-  }
-
-  .signup-field::placeholder {
-    font-weight: 700;
-    font-family: udemy sans, -apple-system, BlinkMacSystemFont, Roboto, segoe ui, Helvetica, Arial, sans-serif, apple color emoji, segoe ui emoji, segoe ui symbol;
-    color: #1c1d1f;
-  }
-
-  .signup-field:focus {
-    border-color: #5624d0;
-  }
-
-  .signup-button {
-    border: none;
-    padding: 12px 0;
-    background-color: #a435f0;
-    color: #fff;
-    font-weight: 800;
-    height: 48px;
-  }
-
-  .signup-button:disabled {
-    border-color: #ccc;
-    background-color: #ccc;
-  }
-
-  .signup-button:hover {
-    cursor: pointer;
-    background-color: #8710d8;
-  }
-
-  .label-subscribe-to-email {
-    display: flex;
-    margin-top: 20px;
-    border: none;
-    padding: 8px 0;
-    cursor: pointer;
-    user-select: none;
-  }
-
-  .signup-field-checkbox {
-    margin: 0;
-    appearance: none;
-    -webkit-appearance: none;
-    height: 20px;
-    width: 20px;
-    box-sizing: border-box;
-    border: 1px solid #000;
-    display: none;
-  }
-
-  .subscribe-text {
-    display: inline-block;
-    margin-left: 5px;
-    font-size: 14px;
-    line-height: 1.4;
-    font-weight: 400;
-    flex: 1;
-  }
-
-  .separator {
-    border-top: 1px solid #aeb1b5;
-    margin: 16px 0;
-  }
-
-  .footer-form {
-    margin-top: 8px;
-    display: flex;
-    justify-content: center;
-  }
-
-  .footer-form-text {
-    font-size: 14px;
-  }
-
-  .footer-form-link {
-    color: #5624d0;
-    text-underline-offset: 4px;
-    font-weight: 700;
-  }
-
-  .footer-form-link:hover {
-    color: #401b9c;
-  }
-
-  .error {
-    border-color: #f11212;
-  }
-
-  .error-message {
-    color: #f11212;
-    font-size: 10px;
-    display: block;
-    margin-bottom: 16px;
-  }
-`;
