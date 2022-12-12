@@ -39,6 +39,7 @@ export function SignUpForm() {
 
     async onValidSubmit(event) {
       event.preventDefault();
+
       const { data } = await execute({
         data: event.data,
       });
