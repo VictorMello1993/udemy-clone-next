@@ -34,8 +34,9 @@ export function SignUpForm() {
     },
   );
 
-  const { ref, fields, errors, validation } = useZorm("signup", userSchema, {
+  const { ref, fields, errors, validation, validate } = useZorm("signup", userSchema, {
     customIssues: data?.errors,
+    setupListeners: false,
 
     async onValidSubmit(event) {
       event.preventDefault();
@@ -103,15 +104,13 @@ export function SignUpForm() {
     .signup-field,
     .signup-button {
       width: 100%;
-      outline: none;
     }
 
     .signup-field {
+      display: block;
       margin-bottom: 8px;
       padding: 20px 16px;
-      outline: none;
       border: 1px solid #1c1d1f;
-      display: block;
       box-sizing: border-box;
       background-color: #f0f0f0;
     }
@@ -142,9 +141,10 @@ export function SignUpForm() {
     .signup-button:disabled {
       border-color: #ccc;
       background-color: #ccc;
+      cursor: auto;
     }
 
-    .signup-button:hover {
+    .signup-button:hover:not(:disabled) {
       cursor: pointer;
       background-color: #8710d8;
     }
@@ -217,7 +217,18 @@ export function SignUpForm() {
 
   return (
     <SignUpFormContainer>
-      <form noValidate ref={ref}>
+      <form
+        noValidate
+        ref={ref}
+        className="contact-form"
+        onSubmit={(event) => {
+          validate();
+
+          if (!validation?.success) {
+            event.preventDefault();
+          }
+        }}
+      >
         <h1 className="signup-title">{texts.title}</h1>
         <input type="text" placeholder="Nome completo" className={`signup-field ${errors.fullname("error")}`} name={fields.fullname()} disabled={loading} />
         {errors.fullname((error) => (
