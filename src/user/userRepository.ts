@@ -1,6 +1,6 @@
 import type { Prisma, User } from "@prisma/client";
-import { prismaClient as p } from "../src/prismaClient";
-import { createUserSchema } from "./user/schemas/createUserSchema";
+import { prismaClient as p } from "../../src/prismaClient";
+import { createUserSchema } from "./schemas/createUserSchema";
 
 export type { User } from "@prisma/client";
 

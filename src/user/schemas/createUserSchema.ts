@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import { userSchema } from "./userSchema";
-import * as userRepository from "../../userRepository";
+import * as userRepository from "../userRepository";
 
 const messages = {
   emailExists: "Esse e-mail já está cadastrado",

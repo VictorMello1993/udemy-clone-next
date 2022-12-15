@@ -1,23 +1,14 @@
 import { useRouter } from "next/router";
 import styled from "styled-components";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { CheckedImage } from "../../components/CheckedImage";
 import { useZorm } from "react-zorm";
 import { userSchema, UserSchema } from "../../user/schemas/userSchema";
 import useAxios from "axios-hooks";
 import { ZodIssue } from "zod";
-import { MdHourglassBottom, MdHourglassTop } from "react-icons/md";
 import { toast } from "react-toastify";
-
-function LoadingIdicator() {
-  const [top, setTop] = useState(true);
-  useEffect(() => {
-    const timeoutId = setTimeout(() => setTop(!top), 500);
-    return () => clearTimeout(timeoutId);
-  }, [top]);
-
-  return top ? <MdHourglassTop size="16px" color="#a435f0" /> : <MdHourglassBottom size="16px" color="#a435f0" />;
-}
+import { ErrorMessage } from "../../components/ErrorMessage";
+import { LoadingIndicator } from "../../components/LoadingIndicator";
 
 export function SignUpForm() {
   const router = useRouter();
@@ -36,7 +27,6 @@ export function SignUpForm() {
 
   const { ref, fields, errors, validation, validate } = useZorm("signup", userSchema, {
     customIssues: data?.errors,
-    setupListeners: false,
 
     async onValidSubmit(event) {
       event.preventDefault();
@@ -81,14 +71,6 @@ export function SignUpForm() {
     submitSuccess: "Conta criada com sucesso",
     submitFailure: "Houve um erro ao criar sua conta",
   };
-
-  function ErrorMessage({ message }: { message: string }) {
-    if (!message) {
-      return null;
-    }
-
-    return <span className="error-message">{message}</span>;
-  }
 
   const SignUpFormContainer = styled.div`
     width: 400px;
@@ -217,18 +199,7 @@ export function SignUpForm() {
 
   return (
     <SignUpFormContainer>
-      <form
-        noValidate
-        ref={ref}
-        className="contact-form"
-        onSubmit={(event) => {
-          validate();
-
-          if (!validation?.success) {
-            event.preventDefault();
-          }
-        }}
-      >
+      <form noValidate ref={ref} className="contact-form">
         <h1 className="signup-title">{texts.title}</h1>
         <input type="text" placeholder="Nome completo" className={`signup-field ${errors.fullname("error")}`} name={fields.fullname()} disabled={loading} />
         {errors.fullname((error) => (
@@ -243,7 +214,7 @@ export function SignUpForm() {
           <ErrorMessage message={error.message} />
         ))}
         <button type="submit" className="signup-button" disabled={disabled}>
-          {loading ? <LoadingIdicator /> : texts.submit}
+          {loading ? <LoadingIndicator /> : texts.submit}
         </button>
         <label htmlFor="subscribe-to-email" className="signup-field label-subscribe-to-email">
           <input type="checkbox" className="signup-field-checkbox" id="subscribe-to-email" onChange={() => setIsChecked(!isChecked)} />

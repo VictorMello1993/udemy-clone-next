@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import * as userRepository from "../../userRepository";
+import * as userRepository from "../../user/userRepository";
 
 export default async function SignUpHandler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
