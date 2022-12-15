@@ -5,6 +5,7 @@ import { CourseItemCardProps } from "../components/Card";
 import { apolloClient, gql } from "../../src/apolloClient";
 import { queryCoursesPage } from "../queries/queryCoursesPage";
 import { mapCoursesToCourseItemCard } from "../functions/mapCoursesToCourseItemCard";
+import { useSession } from "next-auth/react";
 
 export interface HomeProps {
   children: React.ReactNode;
@@ -12,6 +13,9 @@ export interface HomeProps {
 }
 
 export default function Home({ courses, children }: HomeProps) {
+  const { data, status } = useSession();
+  console.log("session", data, status);
+
   return <Layout items={courses}>{children}</Layout>;
 }
 

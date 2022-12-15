@@ -2,13 +2,13 @@ import * as userRepository from "./userRepository";
 import bcrypt from "bcrypt";
 
 export type UserSession = {
-  userId: number;
+  userId: string;
   email: string;
   fullname: string;
 };
 
 export async function login(email: string, password: string) {
-  const user = await userRepository.findByEmail(email, {
+  const maybeUser = await userRepository.findByEmail(email, {
     select: {
       id: true,
       password: true,
@@ -17,14 +17,14 @@ export async function login(email: string, password: string) {
     },
   });
 
-  if (user) {
-    const isLoginSuccess = await bcrypt.compare(password, user.password);
+  if (maybeUser) {
+    const isLoginSuccess = await bcrypt.compare(password, maybeUser.password);
 
     if (isLoginSuccess) {
       const userSession: UserSession = {
-        userId: user.id,
-        email: user.email,
-        fullname: user.fullname,
+        userId: maybeUser.id.toString(),
+        email: maybeUser.email,
+        fullname: maybeUser.fullname,
       };
 
       return {

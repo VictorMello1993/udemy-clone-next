@@ -22,7 +22,7 @@ export const authOptions = {
 
         if (success) {
           return {
-            id: userSession.userId.toString(),
+            id: userSession.userId,
             ...userSession,
           };
         }
