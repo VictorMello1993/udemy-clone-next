@@ -1,24 +1,60 @@
 import React from "react";
 import styled from "styled-components";
 import { AiOutlineHeart } from "react-icons/ai";
-import { MdNotificationsNone, MdOutlineShoppingCart } from "react-icons/md";
+import { MdNotificationsNone, MdOutlineShoppingCart, MdLogout, MdLogin } from "react-icons/md";
 import Link from "next/link";
+import { signOut, useSession } from "next-auth/react";
 
 export function ToolBar() {
+  const { status } = useSession();
   return (
     <ToolBarItems>
-      <Link className="item" href="/">
-        <AiOutlineHeart size="25px" />
-      </Link>
-      <Link className="item" href="/">
-        <MdOutlineShoppingCart size="25px" />
-      </Link>
-      <Link className="item" href="/">
-        <MdNotificationsNone size="25px" />
-      </Link>
-      <Link className="item" href="/">
-        <img width={36} height={36} alt="" src="https://avatars.githubusercontent.com/u/35710766?v=4" style={{ borderRadius: "20px" }} />
-      </Link>
+      {status === "authenticated" && (
+        <>
+          <Link className="item" href="/">
+            <AiOutlineHeart size="25px" />
+          </Link>
+          <Link className="item" href="/">
+            <MdOutlineShoppingCart size="25px" />
+          </Link>
+          <Link className="item" href="/">
+            <MdNotificationsNone size="25px" />
+          </Link>
+          <a
+            className="item"
+            href="/api/auth/signout"
+            title="Sair"
+            onClick={(event) => {
+              event.preventDefault();
+              signOut();
+            }}
+          >
+            <MdLogout aria-label="Sair" size="25px" />
+          </a>
+          <Link className="item" href="/">
+            <img width={36} height={36} alt="" src="https://avatars.githubusercontent.com/u/35710766?v=4" style={{ borderRadius: "20px" }} />
+          </Link>
+        </>
+      )}
+      {status === "unauthenticated" && (
+        <>
+          <Link className="item" href="/">
+            <AiOutlineHeart size="25px" />
+          </Link>
+          <Link className="item" href="/">
+            <MdOutlineShoppingCart size="25px" />
+          </Link>
+          <Link className="item" href="/">
+            <MdNotificationsNone size="25px" />
+          </Link>
+          <a className="item" href="/api/auth/signin" aria-label="Efetuar login" title="Entrar">
+            <MdLogin size="25px" aria-label="Entrar" />
+          </a>
+          <Link className="item" href="/">
+            <img width={36} height={36} alt="" src="https://avatars.githubusercontent.com/u/35710766?v=4" style={{ borderRadius: "20px" }} />
+          </Link>
+        </>
+      )}
     </ToolBarItems>
   );
 }

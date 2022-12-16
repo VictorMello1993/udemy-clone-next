@@ -9,10 +9,9 @@ import { ZodIssue } from "zod";
 import { toast } from "react-toastify";
 import { ErrorMessage } from "../../components/ErrorMessage";
 import { LoadingIndicator } from "../../components/LoadingIndicator";
+import { signIn } from "next-auth/react";
 
 export function SignUpForm() {
-  const router = useRouter();
-
   const [isChecked, setIsChecked] = useState(true);
 
   const [{ data, loading }, execute] = useAxios<{ user: { id: number }; errors: ZodIssue[] }, UserSchema>(
@@ -46,7 +45,10 @@ export function SignUpForm() {
             background: "#afdfaf",
           },
         });
-        router.push("/");
+        signIn("credentials", {
+          username: event.data.email,
+          password: event.data.password,
+        });
       } else {
         toast(texts.submitFailure, {
           style: {
