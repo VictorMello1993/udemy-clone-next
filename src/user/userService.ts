@@ -18,7 +18,7 @@ export async function login(email: string, password: string) {
   });
 
   if (maybeUser) {
-    const isLoginSuccess = await bcrypt.compare(password, maybeUser.password);
+    const isLoginSuccess = await bcrypt.compare(password, maybeUser?.password);
 
     if (isLoginSuccess) {
       const userSession: UserSession = {

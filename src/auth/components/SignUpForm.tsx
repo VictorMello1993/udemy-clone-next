@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import styled from "styled-components";
 import { useState } from "react";
 import { CheckedImage } from "../../components/CheckedImage";
@@ -227,7 +226,7 @@ export function SignUpForm() {
         <div className="footer-form">
           <span className="footer-form-text">
             {`${texts.alreadyHasAccount.split("?")[0]}?`}
-            <a href="/" className="footer-form-link">
+            <a href="/api/auth/signin" className="footer-form-link">
               {texts.alreadyHasAccount.split("?")[1]}
             </a>
           </span>
