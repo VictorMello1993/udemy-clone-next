@@ -17,7 +17,7 @@ export async function login(email: string, password: string) {
     },
   });
 
-  if (maybeUser) {
+  if (maybeUser !== null && maybeUser.password) {
     const isLoginSuccess = await bcrypt.compare(password, maybeUser?.password);
 
     if (isLoginSuccess) {

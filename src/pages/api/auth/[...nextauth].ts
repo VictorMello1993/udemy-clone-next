@@ -25,10 +25,14 @@ export const authOptions: AuthOptions = {
         const { username: email, password } = credentials;
         const { success, userSession } = await userService.login(email, password);
 
+        console.log("userSession", userSession);
+        console.log("success", success);
+
         if (success) {
           return {
             id: userSession.userId,
-            ...userSession,
+            email: userSession.email,
+            name: userSession.fullname,
           };
         }
 
