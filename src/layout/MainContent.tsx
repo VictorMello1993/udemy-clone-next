@@ -27,19 +27,19 @@ export function MainContent(props: MainContentProps) {
             <div className="card-container">
               {jsonItems
                 ? jsonItems.map((item: CourseItemCardProps, key: number) => {
-                    return (
-                      <Card
-                        description={item.description}
-                        instructorName={item.instructorName}
-                        price={item.price}
-                        ratingClassification={item.ratingClassification}
-                        image={item.image}
-                        totalRate={item.totalRate}
-                        key={key}
-                        link={item.link}
-                      />
-                    );
-                  })
+                  return (
+                    <Card
+                      description={item.description}
+                      instructorName={item.instructorName}
+                      price={item.price}
+                      ratingClassification={item.ratingClassification}
+                      image={item.image}
+                      totalRate={item.totalRate}
+                      key={key}
+                      link={item.link}
+                    />
+                  );
+                })
                 : null}
             </div>
           </div>
@@ -69,7 +69,6 @@ const CourseItem = styled.div`
   .course-item-wrapper {
     margin: 48px auto;
     width: 85%;
-    font-family: udemy sans, -apple-system, BlinkMacSystemFont, Roboto, segoe ui, Helvetica, Arial, sans-serif, apple color emoji, segoe ui emoji, segoe ui symbol;
   }
 
   .title {

@@ -1,4 +1,4 @@
-import type { Session, TokenSet } from "next-auth";
+import type { Session } from "next-auth";
 import * as userRepository from "./userRepository";
 import bcrypt from "bcrypt";
 

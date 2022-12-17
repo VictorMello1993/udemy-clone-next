@@ -81,7 +81,6 @@ export function SignUpForm() {
     .signup-title {
       margin-bottom: 16px;
       font-size: 16px;
-      font-family: udemy sans, -apple-system, BlinkMacSystemFont, Roboto, segoe ui, Helvetica, Arial, sans-serif, apple color emoji, segoe ui emoji, segoe ui symbol;
     }
 
     .signup-field,
@@ -100,7 +99,6 @@ export function SignUpForm() {
 
     .signup-field::placeholder {
       font-weight: 700;
-      font-family: udemy sans, -apple-system, BlinkMacSystemFont, Roboto, segoe ui, Helvetica, Arial, sans-serif, apple color emoji, segoe ui emoji, segoe ui symbol;
       color: #1c1d1f;
     }
 

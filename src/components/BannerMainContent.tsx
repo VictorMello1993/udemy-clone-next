@@ -43,7 +43,6 @@ const BannerElement = styled.div`
   }
 
   h1 {
-    font-family: SuisseWorks, Georgia, Times, times new roman, serif, apple color emoji, segoe ui emoji, segoe ui symbol;
     font-size: 32px;
     font-weight: 700;
     line-height: 40px;
@@ -52,7 +51,6 @@ const BannerElement = styled.div`
   p {
     line-height: 22.4px;
     font-size: 16px;
-    font-family: udemy sans, sf pro text, -apple-system, BlinkMacSystemFont, Roboto, segoe ui, Helvetica, Arial, sans-serif, apple color emoji, segoe ui emoji, segoe ui symbol;
   }
 
   @media (min-width: 500px) and (max-width: 650px) {

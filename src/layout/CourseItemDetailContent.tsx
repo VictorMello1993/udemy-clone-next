@@ -41,7 +41,6 @@ const CourseItemDetailTopContainer = styled.div`
 
   .course-detail:not(:first-child) {
     margin-top: 15px;
-    font-family: udemy sans, -apple-system, BlinkMacSystemFont, Roboto, segoe ui, Helvetica, Arial, sans-serif, apple color emoji, segoe ui emoji, segoe ui symbol;
   }
 
   .course-detail .text {

@@ -170,7 +170,6 @@ const ContactFormContainer = styled.div`
 
   .form-title {
     font-size: 32px;
-    font-family: udemy sans, -apple-system, BlinkMacSystemFont, Roboto, segoe ui, Helvetica, Arial, sans-serif, apple color emoji, segoe ui emoji, segoe ui symbol;
   }
 
   .field {

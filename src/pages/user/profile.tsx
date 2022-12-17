@@ -2,6 +2,7 @@ import * as userRepository from "../../user/userRepository";
 import type { GetServerSideProps } from "next";
 import styled from "styled-components";
 import { getServerSession } from "../../auth/getServerSession";
+import { Header } from "../../layout/Header";
 
 type ProfilePageProps = {
   user: userRepository.User;
@@ -10,14 +11,15 @@ type ProfilePageProps = {
 export default function ProfilePage({ user: { fullname, email } }: ProfilePageProps) {
   return (
     <>
-      <h1 className="profile-title">{`Bem vindo, ${fullname}!`}</h1>
-      <ProfilePageContainer>
+      <Header />
+      <h1 className="profile-title" style={{ textAlign: "center", marginTop: "20px" }}>{`Bem vindo, ${fullname}!`}</h1>
+      <ProfilePageFormContainer>
         <h2 className="profile-form-title">Perfil do usuário</h2>
         <span className="profile-form-secondary-title">Adicione informações sobre você</span>
         <form noValidate className="profile-form">
           <section className="form-group">
             <fieldset className="form-group-fs">
-              <legend>Dados básicos</legend>
+              <legend className="fs-legend">Dados básicos</legend>
               <input type="text" placeholder="Nome completo" className="profile-field" value={fullname} />
               <input type="email" placeholder="E-mail" className="profile-field" value={email} />
             </fieldset>
@@ -30,12 +32,12 @@ export default function ProfilePage({ user: { fullname, email } }: ProfilePagePr
             </fieldset>
           </footer>
         </form>
-      </ProfilePageContainer>
+      </ProfilePageFormContainer>
     </>
   );
 }
 
-const ProfilePageContainer = styled.div`
+const ProfilePageFormContainer = styled.div`
   width: 600px;
   margin: 48px auto;
   padding: 24px 0;

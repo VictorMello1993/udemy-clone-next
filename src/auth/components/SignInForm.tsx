@@ -36,7 +36,6 @@ export function SignInForm() {
     .signin-title {
       margin-bottom: 16px;
       font-size: 16px;
-      font-family: udemy sans, -apple-system, BlinkMacSystemFont, Roboto, segoe ui, Helvetica, Arial, sans-serif, apple color emoji, segoe ui emoji, segoe ui symbol;
     }
 
     .signin-field,
@@ -57,7 +56,6 @@ export function SignInForm() {
 
     .signin-field::placeholder {
       font-weight: 700;
-      font-family: udemy sans, -apple-system, BlinkMacSystemFont, Roboto, segoe ui, Helvetica, Arial, sans-serif, apple color emoji, segoe ui emoji, segoe ui symbol;
       color: #1c1d1f;
     }
 

@@ -4,9 +4,10 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { MdNotificationsNone, MdOutlineShoppingCart, MdLogout, MdLogin } from "react-icons/md";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
+import { Avatar } from "./Avatar";
 
 export function ToolBar() {
-  const { status } = useSession();
+  const { status, data } = useSession();
   return (
     <ToolBarItems>
       <Link className="item" href="/">
@@ -37,15 +38,13 @@ export function ToolBar() {
         </>
       )}
       {status === "unauthenticated" && (
-        <>
-          <a className="item" href="/api/auth/signin" aria-label="Efetuar login" title="Entrar">
-            <MdLogin size="25px" aria-label="Entrar" />
-          </a>
-          {/* <Link className="item" href="/api/signup">
-            <img width={36} height={36} alt="" src="https://avatars.githubusercontent.com/u/35710766?v=4" style={{ borderRadius: "20px" }} />
-          </Link> */}
-        </>
+        <a className="item" href="/api/auth/signin" aria-label="Efetuar login" title="Entrar">
+          <MdLogin size="25px" aria-label="Entrar" />
+        </a>
       )}
+      <Link className="item" href={data?.user ? "/user/profile" : "/signup"}>
+        <Avatar size={36} name={data?.user.fullname} src={data?.user.fullname ? undefined : "/avatar.jpeg"} alt="" />
+      </Link>
     </ToolBarItems>
   );
 }

@@ -32,7 +32,6 @@ const NoticeFooterElement = styled.div`
     line-height: 22.8px;
     text-size-adjust: 100%;
     letter-spacing: -0.2px;
-    font-family: udemy sans, -apple-system, BlinkMacSystemFont, Roboto, segoe ui, Helvetica, Arial, sans-serif, apple color emoji, segoe ui emoji, segoe ui symbol;
   }
 
   .notice-logos {
