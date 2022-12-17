@@ -95,6 +95,11 @@ const ProfilePageFormContainer = styled.div`
   .form-group-fs {
     border: none;
   }
+
+  .fs-legend {
+    font-weight: 700;
+    padding-bottom: 8px;
+  }
 `;
 
 export const getServerSideProps: GetServerSideProps<ProfilePageProps> = async ({ req, res }) => {

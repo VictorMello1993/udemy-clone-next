@@ -32,9 +32,6 @@ export function ToolBar() {
           >
             <MdLogout aria-label="Sair" size="25px" />
           </a>
-          {/* <Link className="item" href="/">
-            <img width={36} height={36} alt="" src="https://avatars.githubusercontent.com/u/35710766?v=4" style={{ borderRadius: "20px" }} />
-          </Link> */}
         </>
       )}
       {status === "unauthenticated" && (
@@ -42,9 +39,11 @@ export function ToolBar() {
           <MdLogin size="25px" aria-label="Entrar" />
         </a>
       )}
-      <Link className="item" href={data?.user ? "/user/profile" : "/signup"}>
-        <Avatar size={36} name={data?.user.fullname} src={data?.user.fullname ? undefined : "/avatar.jpeg"} alt="" />
-      </Link>
+      <span className="item">
+        <Link href={data?.user ? "/user/profile" : "/signup"}>
+          <Avatar size={36} name={data?.user.fullname} src={data?.user.fullname ? undefined : "/avatar.jpeg"} alt="" />
+        </Link>
+      </span>
     </ToolBarItems>
   );
 }
