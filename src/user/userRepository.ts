@@ -34,3 +34,7 @@ export async function create(user: User, args: Omit<Prisma.UserCreateArgs, "data
     };
   }
 }
+
+export async function findMany(args: Omit<Prisma.UserFindManyArgs, "data"> = {}) {
+  return p.user.findMany(args);
+}
