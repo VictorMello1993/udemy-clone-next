@@ -7,7 +7,13 @@ export const authOptions: AuthOptions = {
     redirect() {
       return "/";
     },
+    async session({ session }) {
+      const userSession = await userService.getUserSessionData(session.user.email);
+      session.user = userSession;
+      return session;
+    },
   },
+
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -23,16 +29,12 @@ export const authOptions: AuthOptions = {
         }
 
         const { username: email, password } = credentials;
-        const { success, userSession } = await userService.login(email, password);
-
-        console.log("userSession", userSession);
-        console.log("success", success);
+        const { success, id } = await userService.credentialsLogin(email, password);
 
         if (success) {
           return {
-            id: userSession.userId,
-            email: userSession.email,
-            name: userSession.fullname,
+            id,
+            email,
           };
         }
 
