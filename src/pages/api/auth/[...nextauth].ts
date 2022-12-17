@@ -7,9 +7,12 @@ export const authOptions: AuthOptions = {
     redirect() {
       return "/user/profile";
     },
+
     async session({ session }) {
       const userSession = await userService.getUserSessionData(session.user.email);
+
       session.user = userSession;
+
       return session;
     },
   },

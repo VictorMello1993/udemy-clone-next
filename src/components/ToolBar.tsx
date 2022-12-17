@@ -9,20 +9,20 @@ export function ToolBar() {
   const { status } = useSession();
   return (
     <ToolBarItems>
+      <Link className="item" href="/">
+        <AiOutlineHeart size="25px" />
+      </Link>
+      <Link className="item" href="/">
+        <MdOutlineShoppingCart size="25px" />
+      </Link>
+      <Link className="item" href="/">
+        <MdNotificationsNone size="25px" />
+      </Link>
       {status === "authenticated" && (
         <>
-          <Link className="item" href="/">
-            <AiOutlineHeart size="25px" />
-          </Link>
-          <Link className="item" href="/">
-            <MdOutlineShoppingCart size="25px" />
-          </Link>
-          <Link className="item" href="/">
-            <MdNotificationsNone size="25px" />
-          </Link>
           <a
             className="item"
-            href="/"
+            href="/api/auth/signout"
             title="Sair"
             onClick={(event) => {
               event.preventDefault();
@@ -31,28 +31,19 @@ export function ToolBar() {
           >
             <MdLogout aria-label="Sair" size="25px" />
           </a>
-          <Link className="item" href="/">
+          {/* <Link className="item" href="/">
             <img width={36} height={36} alt="" src="https://avatars.githubusercontent.com/u/35710766?v=4" style={{ borderRadius: "20px" }} />
-          </Link>
+          </Link> */}
         </>
       )}
       {status === "unauthenticated" && (
         <>
-          <Link className="item" href="/">
-            <AiOutlineHeart size="25px" />
-          </Link>
-          <Link className="item" href="/">
-            <MdOutlineShoppingCart size="25px" />
-          </Link>
-          <Link className="item" href="/">
-            <MdNotificationsNone size="25px" />
-          </Link>
           <a className="item" href="/api/auth/signin" aria-label="Efetuar login" title="Entrar">
             <MdLogin size="25px" aria-label="Entrar" />
           </a>
-          <Link className="item" href="/api/signup">
+          {/* <Link className="item" href="/api/signup">
             <img width={36} height={36} alt="" src="https://avatars.githubusercontent.com/u/35710766?v=4" style={{ borderRadius: "20px" }} />
-          </Link>
+          </Link> */}
         </>
       )}
     </ToolBarItems>

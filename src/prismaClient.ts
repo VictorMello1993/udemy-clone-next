@@ -1,6 +1,11 @@
 import { PrismaClient } from "@prisma/client";
 
-export const prismaClient = new PrismaClient();
+declare module globalThis {
+  var prismaClient: PrismaClient | undefined;
+}
 
-// O escopo global é para evitar o erro de múltiplas conexões entre clients diferentes quando a mesma base é conectada pelo Prisma
-(globalThis as any).prismaClient = (globalThis as any).prismaClient ?? prismaClient;
+export const prismaClient = globalThis.prismaClient ?? new PrismaClient();
+
+globalThis.prismaClient = globalThis.prismaClient ?? prismaClient;
+
+export const p = prismaClient;

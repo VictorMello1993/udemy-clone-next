@@ -1,6 +1,5 @@
 import * as userRepository from "../../user/userRepository";
 import type { GetServerSideProps } from "next";
-import { getSession } from "next-auth/react";
 import styled from "styled-components";
 import { getServerSession } from "../../auth/getServerSession";
 
@@ -8,7 +7,7 @@ type ProfilePageProps = {
   user: userRepository.User;
 };
 
-export default function ProfilePage({ user: { fullname } }: ProfilePageProps) {
+export default function ProfilePage({ user: { fullname, email } }: ProfilePageProps) {
   return (
     <>
       <h1 className="profile-title">{`Bem vindo, ${fullname}!`}</h1>
@@ -19,8 +18,8 @@ export default function ProfilePage({ user: { fullname } }: ProfilePageProps) {
           <section className="form-group">
             <fieldset className="form-group-fs">
               <legend>Dados básicos</legend>
-              <input type="text" placeholder="Nome completo" className="profile-field" />
-              <input type="email" placeholder="E-mail" className="profile-field" />
+              <input type="text" placeholder="Nome completo" className="profile-field" value={fullname} />
+              <input type="email" placeholder="E-mail" className="profile-field" value={email} />
             </fieldset>
           </section>
           <footer className="form-group">
