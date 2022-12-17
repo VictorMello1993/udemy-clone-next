@@ -22,7 +22,7 @@ export function ToolBar() {
           </Link>
           <a
             className="item"
-            href="/api/auth/signout"
+            href="/"
             title="Sair"
             onClick={(event) => {
               event.preventDefault();
@@ -50,7 +50,7 @@ export function ToolBar() {
           <a className="item" href="/api/auth/signin" aria-label="Efetuar login" title="Entrar">
             <MdLogin size="25px" aria-label="Entrar" />
           </a>
-          <Link className="item" href="/">
+          <Link className="item" href="/api/signup">
             <img width={36} height={36} alt="" src="https://avatars.githubusercontent.com/u/35710766?v=4" style={{ borderRadius: "20px" }} />
           </Link>
         </>
