@@ -3,25 +3,41 @@ import type { GetServerSideProps } from "next";
 import styled from "styled-components";
 import { getServerSession } from "../../auth/getServerSession";
 import { Header } from "../../layout/Header";
-import { userSchema } from "../../user/schemas/userSchema";
+import { UpdateUserSchema, updateUserSchema } from "../../user/schemas/updateUserSchema";
 import { useValue, useZorm, Value } from "react-zorm";
 import { ErrorMessage } from "../../components/ErrorMessage";
 import { useState } from "react";
+import useAxios from "axios-hooks";
+import { LoadingIndicator } from "../../components/LoadingIndicator";
 
 type ProfilePageProps = {
   user: userRepository.User;
 };
 
 export default function ProfilePage({ user: { fullname, email } }: ProfilePageProps) {
-  const zo = useZorm("profile", userSchema, {
-    onValidSubmit(event) {
+  const [fullnameState, setFullname] = useState(fullname);
+  const [emailState, setEmail] = useState(email);
+
+  const [{ data, loading }, execute] = useAxios<UpdateUserSchema, UpdateUserSchema>(
+    {
+      url: "/api/user/profile",
+      method: "PUT",
+    },
+    {
+      manual: true,
+    },
+  );
+
+  const { fields, errors, validation, ref } = useZorm("profile", updateUserSchema, {
+    async onValidSubmit(event) {
       event.preventDefault();
-      console.log(event.data, undefined, 2);
+      const { data } = await execute({
+        data: event.data,
+      });
     },
   });
 
-  const [fullnameState, setFullname] = useState(fullname);
-  const [emailState, setEmail] = useState(email);
+  const disabled = validation?.success === false || loading;
 
   return (
     <>
@@ -30,38 +46,40 @@ export default function ProfilePage({ user: { fullname, email } }: ProfilePagePr
       <ProfilePageFormContainer>
         <h2 className="profile-form-title">Perfil do usuário</h2>
         <span className="profile-form-secondary-title">Adicione informações sobre você</span>
-        <form noValidate className="profile-form" ref={zo.ref}>
+        <form noValidate className="profile-form" ref={ref}>
           <section className="form-group">
             <fieldset className="form-group-fs">
               <legend className="fs-legend">Dados básicos</legend>
               <input
                 type="text"
                 placeholder="Nome completo"
-                className={`profile-field ${zo.errors.fullname("error")}`}
+                className={`profile-field ${errors.fullname("error")}`}
                 value={fullnameState}
-                name={zo.fields.fullname()}
+                name={fields.fullname()}
                 onChange={(event) => setFullname(event.target.value)}
+                disabled={loading}
               />
-              {zo.errors.fullname((error) => (
+              {errors.fullname((error) => (
                 <ErrorMessage message={error.message} />
               ))}
               <input
                 type="email"
                 placeholder="E-mail"
-                className={`profile-field ${zo.errors.fullname("error")}`}
+                className={`profile-field ${errors.fullname("error")}`}
                 value={emailState}
-                name={zo.fields.email()}
+                name={fields.email()}
                 onChange={(event) => setEmail(event.target.value)}
+                disabled={loading}
               />
-              {zo.errors.email((error) => (
+              {errors.email((error) => (
                 <ErrorMessage message={error.message} />
               ))}
             </fieldset>
           </section>
           <footer className="form-group">
             <fieldset className="form-group-fs">
-              <button type="submit" className="profile-savebutton">
-                Salvar
+              <button type="submit" className="profile-savebutton" disabled={disabled}>
+                {loading ? <LoadingIndicator /> : "Salvar"}
               </button>
             </fieldset>
           </footer>
@@ -120,6 +138,12 @@ const ProfilePageFormContainer = styled.div`
   .profile-savebutton:hover:not(:disabled) {
     cursor: pointer;
     background-color: #8710d8;
+  }
+
+  .profile-savebutton:disabled {
+    border-color: #ccc;
+    background-color: #ccc;
+    cursor: auto;
   }
 
   .form-group {

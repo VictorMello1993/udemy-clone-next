@@ -28,6 +28,7 @@ export function SignUpForm() {
 
     async onValidSubmit(event) {
       event.preventDefault();
+      console.log(event.data.email, undefined, 2);
 
       const { data } = await execute({
         data: event.data,
@@ -119,15 +120,15 @@ export function SignUpForm() {
       height: 48px;
     }
 
+    .signup-button:hover:not(:disabled) {
+      cursor: pointer;
+      background-color: #8710d8;
+    }
+
     .signup-button:disabled {
       border-color: #ccc;
       background-color: #ccc;
       cursor: auto;
-    }
-
-    .signup-button:hover:not(:disabled) {
-      cursor: pointer;
-      background-color: #8710d8;
     }
 
     .label-subscribe-to-email {

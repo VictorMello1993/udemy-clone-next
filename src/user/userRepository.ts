@@ -1,6 +1,9 @@
 import type { Prisma, User } from "@prisma/client";
 import { prismaClient as p } from "../../src/prismaClient";
+import user from "../pages/api/user";
+
 import { createUserSchema } from "./schemas/createUserSchema";
+import { updateUserSchema } from "./schemas/updateUserSchema";
 
 export type { User } from "@prisma/client";
 
@@ -37,4 +40,24 @@ export async function create(user: User, args: Omit<Prisma.UserCreateArgs, "data
 
 export async function findMany(args: Omit<Prisma.UserFindManyArgs, "data"> = {}) {
   return p.user.findMany(args);
+}
+
+export async function update(user: User, args: Omit<Prisma.UserFindManyArgs, "data"> = {}) {
+  const userValidation = await updateUserSchema.safeParseAsync(user);
+
+  console.log("user", user);
+  console.log("userValidation", userValidation);
+
+  if (userValidation.success) {
+    const updatedUser = await p.user.update({
+      where: { id: user.id },
+      data: { email: user.email },
+    });
+
+    return { updatedUser };
+  } else {
+    return {
+      errors: userValidation.error.errors,
+    };
+  }
 }
