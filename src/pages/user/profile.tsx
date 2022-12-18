@@ -3,12 +3,26 @@ import type { GetServerSideProps } from "next";
 import styled from "styled-components";
 import { getServerSession } from "../../auth/getServerSession";
 import { Header } from "../../layout/Header";
+import { userSchema } from "../../user/schemas/userSchema";
+import { useValue, useZorm, Value } from "react-zorm";
+import { ErrorMessage } from "../../components/ErrorMessage";
+import { useState } from "react";
 
 type ProfilePageProps = {
   user: userRepository.User;
 };
 
 export default function ProfilePage({ user: { fullname, email } }: ProfilePageProps) {
+  const zo = useZorm("profile", userSchema, {
+    onValidSubmit(event) {
+      event.preventDefault();
+      console.log(event.data, undefined, 2);
+    },
+  });
+
+  const [fullnameState, setFullname] = useState(fullname);
+  const [emailState, setEmail] = useState(email);
+
   return (
     <>
       <Header />
@@ -16,12 +30,32 @@ export default function ProfilePage({ user: { fullname, email } }: ProfilePagePr
       <ProfilePageFormContainer>
         <h2 className="profile-form-title">Perfil do usuário</h2>
         <span className="profile-form-secondary-title">Adicione informações sobre você</span>
-        <form noValidate className="profile-form">
+        <form noValidate className="profile-form" ref={zo.ref}>
           <section className="form-group">
             <fieldset className="form-group-fs">
               <legend className="fs-legend">Dados básicos</legend>
-              <input type="text" placeholder="Nome completo" className="profile-field" value={fullname} />
-              <input type="email" placeholder="E-mail" className="profile-field" value={email} />
+              <input
+                type="text"
+                placeholder="Nome completo"
+                className={`profile-field ${zo.errors.fullname("error")}`}
+                value={fullnameState}
+                name={zo.fields.fullname()}
+                onChange={(event) => setFullname(event.target.value)}
+              />
+              {zo.errors.fullname((error) => (
+                <ErrorMessage message={error.message} />
+              ))}
+              <input
+                type="email"
+                placeholder="E-mail"
+                className={`profile-field ${zo.errors.fullname("error")}`}
+                value={emailState}
+                name={zo.fields.email()}
+                onChange={(event) => setEmail(event.target.value)}
+              />
+              {zo.errors.email((error) => (
+                <ErrorMessage message={error.message} />
+              ))}
             </fieldset>
           </section>
           <footer className="form-group">
@@ -99,6 +133,17 @@ const ProfilePageFormContainer = styled.div`
   .fs-legend {
     font-weight: 700;
     padding-bottom: 8px;
+  }
+
+  .error {
+    border-color: #f11212;
+  }
+
+  .error-message {
+    color: #f11212;
+    font-size: 10px;
+    display: block;
+    margin-bottom: 16px;
   }
 `;
 
