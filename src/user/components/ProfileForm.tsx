@@ -1,5 +1,4 @@
 import useAxios from "axios-hooks";
-import { number } from "joi";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useZorm } from "react-zorm";
@@ -22,7 +21,10 @@ export function ProfileForm({ user: { id, fullname, email } }: ProfileFormProps)
   const texts = {
     submit: "Salvar",
     submitSuccess: "Dados alterados com sucesso",
-    submitFailure: "Houve um erro ao atualizar o seu perfil",
+    submitFailure: "Houve erro ao atualizar o seu perfil",
+    userProfile: "Perfil do usuário",
+    addInfoAboutYou: "Adicione informações sobre você",
+    basicData: "Dados básicos",
   };
 
   const [{ data, loading }, execute] = useAxios<{ user: { id: number; fullname: string; email: string }; errors: ZodIssue[] }, UpdateUserSchema>(
@@ -76,19 +78,18 @@ export function ProfileForm({ user: { id, fullname, email } }: ProfileFormProps)
       <Header />
       <h1 className="profile-title" style={{ textAlign: "center", marginTop: "20px" }}>{`Bem vindo, ${fullname}!`}</h1>
       <ProfilePageFormContainer>
-        <h2 className="profile-form-title">Perfil do usuário</h2>
-        <span className="profile-form-secondary-title">Adicione informações sobre você</span>
+        <h2 className="profile-form-title">{texts.userProfile}</h2>
+        <span className="profile-form-secondary-title">{texts.addInfoAboutYou}</span>
         <form noValidate className="profile-form" ref={ref}>
           <section className="form-group">
             <fieldset className="form-group-fs">
-              <legend className="fs-legend">Dados básicos</legend>
+              <legend className="fs-legend">{texts.basicData}</legend>
               <input
                 type="text"
                 placeholder="Id"
-                className={`profile-field ${errors.fullname("error")}`}
+                className={`profile-field ${errors.fullname("error")} hidden`}
                 value={idState}
                 name={fields.id()}
-                style={{ display: "none" }}
                 disabled={loading}
                 onChange={(event) => setId(event.target.value)}
               />
@@ -139,12 +140,14 @@ const ProfilePageFormContainer = styled.div`
 
   .profile-form-title {
     text-align: center;
+    font-size: 16px;
   }
 
   .profile-form-secondary-title {
     display: block;
     text-align: center;
     margin-top: 8px;
+    font-size: 16px;
   }
 
   .profile-field,
@@ -164,6 +167,10 @@ const ProfilePageFormContainer = styled.div`
 
   .profile-field:focus {
     border-color: #5624d0;
+  }
+
+  .hidden {
+    display: none;
   }
 
   .profile-savebutton {

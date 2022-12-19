@@ -1,7 +1,7 @@
 import type { Prisma, User } from "@prisma/client";
 import { prismaClient as p } from "../../src/prismaClient";
 import { createUserSchema } from "./schemas/createUserSchema";
-import { updateUserSchemaValidation } from "./schemas/updateUserSchemaValidation";
+import { updateUserSchemaServerValidation } from "./schemas/updateUserSchemaServerValidation";
 
 export type { User } from "@prisma/client";
 
@@ -43,7 +43,7 @@ export async function findMany(args: Omit<Prisma.UserFindManyArgs, "data"> = {})
 }
 
 export async function update(user: { id: number; fullname: string; email: string }) {
-  const userValidation = await updateUserSchemaValidation.safeParseAsync(user);
+  const userValidation = await updateUserSchemaServerValidation.safeParseAsync(user);
 
   if (userValidation.success) {
     const updatedUser = await p.user.update({

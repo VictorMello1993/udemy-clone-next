@@ -5,7 +5,7 @@ const messages = {
   emailExists: "Esse e-mail já está cadastrado",
 };
 
-export const updateUserSchemaValidation = updateUserSchema.refine(
+export const updateUserSchemaServerValidation = updateUserSchema.refine(
   async ({ email, id }) => {
     const user = await userRepository.findByEmail(email);
     return user === null || (user?.email === email && user?.id.toString() === id);
