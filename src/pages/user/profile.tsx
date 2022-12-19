@@ -3,22 +3,31 @@ import type { GetServerSideProps } from "next";
 import styled from "styled-components";
 import { getServerSession } from "../../auth/getServerSession";
 import { Header } from "../../layout/Header";
-import { UpdateUserSchema, updateUserSchema } from "../../user/schemas/updateUserSchema";
 import { useValue, useZorm, Value } from "react-zorm";
 import { ErrorMessage } from "../../components/ErrorMessage";
 import { useState } from "react";
 import useAxios from "axios-hooks";
 import { LoadingIndicator } from "../../components/LoadingIndicator";
+import { z, ZodIssue } from "zod";
+import { updateUserSchema, UpdateUserSchema } from "../../user/schemas/updateUserSchema";
+import { toast } from "react-toastify";
 
 type ProfilePageProps = {
   user: userRepository.User;
 };
 
-export default function ProfilePage({ user: { fullname, email } }: ProfilePageProps) {
+export default function ProfilePage({ user: { fullname, email, id } }: ProfilePageProps) {
   const [fullnameState, setFullname] = useState(fullname);
   const [emailState, setEmail] = useState(email);
+  const [idState, setId] = useState(id.toString());
 
-  const [{ data, loading }, execute] = useAxios<UpdateUserSchema, UpdateUserSchema>(
+  const texts = {
+    submit: "Salvar",
+    submitSuccess: "Dados alterados com sucesso",
+    submitFailure: "Houve um erro ao atualizar o seu perfil",
+  };
+
+  const [{ data, loading }, execute] = useAxios<{ user: { id: number; fullname: string; email: string }; errors: ZodIssue[] }, UpdateUserSchema>(
     {
       url: "/api/user/profile",
       method: "PUT",
@@ -29,11 +38,36 @@ export default function ProfilePage({ user: { fullname, email } }: ProfilePagePr
   );
 
   const { fields, errors, validation, ref } = useZorm("profile", updateUserSchema, {
+    customIssues: data?.errors,
     async onValidSubmit(event) {
       event.preventDefault();
-      const { data } = await execute({
+      const result = await execute({
         data: event.data,
       });
+
+      if (!result.data.errors) {
+        toast(texts.submitSuccess, {
+          style: {
+            backgroundColor: "#3c9e3c",
+            color: "#fff",
+          },
+          autoClose: 5000,
+          progressStyle: {
+            background: "#afdfaf",
+          },
+        });
+      } else {
+        toast(texts.submitFailure, {
+          style: {
+            backgroundColor: "#f11212",
+            color: "#fff",
+          },
+          autoClose: 5000,
+          progressStyle: {
+            background: "#e2a8b2",
+          },
+        });
+      }
     },
   });
 
@@ -50,6 +84,16 @@ export default function ProfilePage({ user: { fullname, email } }: ProfilePagePr
           <section className="form-group">
             <fieldset className="form-group-fs">
               <legend className="fs-legend">Dados básicos</legend>
+              <input
+                type="text"
+                placeholder="Id"
+                className={`profile-field ${errors.fullname("error")}`}
+                value={idState}
+                name={fields.id()}
+                style={{ display: "none" }}
+                disabled={loading}
+                onChange={(event) => setId(event.target.value)}
+              />
               <input
                 type="text"
                 placeholder="Nome completo"
