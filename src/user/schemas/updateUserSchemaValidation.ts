@@ -6,9 +6,9 @@ const messages = {
 };
 
 export const updateUserSchemaValidation = updateUserSchema.refine(
-  async ({ email }) => {
+  async ({ email, id }) => {
     const user = await userRepository.findByEmail(email);
-    return user === null;
+    return user === null || (user?.email === email && user?.id.toString() === id);
   },
   {
     message: messages.emailExists,

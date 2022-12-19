@@ -1,9 +1,6 @@
 import type { Prisma, User } from "@prisma/client";
 import { prismaClient as p } from "../../src/prismaClient";
-import user from "../pages/api/user";
-
 import { createUserSchema } from "./schemas/createUserSchema";
-import { updateUserSchema } from "./schemas/updateUserSchema";
 import { updateUserSchemaValidation } from "./schemas/updateUserSchemaValidation";
 
 export type { User } from "@prisma/client";
@@ -18,7 +15,9 @@ export function findById(id: number, args: Omit<Prisma.UserFindFirstArgs, "where
 export function findByEmail(email: string, args: Omit<Prisma.UserFindUniqueArgs, "where"> = {}) {
   return p.user.findUnique({
     ...args,
-    where: { email },
+    where: {
+      email,
+    },
   });
 }
 
